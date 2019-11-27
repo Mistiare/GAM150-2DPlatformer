@@ -7,6 +7,8 @@ public class DimensionChanger : MonoBehaviour
 
     public GameObject tilemap;
     public GameObject tilemap2;
+    public GameObject m_MainCamera;
+    public GameObject m_CameraTwo;
     private bool active = true;
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class DimensionChanger : MonoBehaviour
         {
             tilemap.SetActive(false);
             tilemap2.SetActive(true);
+            m_MainCamera.SetActive(false);
+            m_CameraTwo.SetActive(true);
             Debug.Log("disabled");
             active = false;
         }
@@ -29,6 +33,8 @@ public class DimensionChanger : MonoBehaviour
         {
             tilemap.SetActive(true);
             tilemap2.SetActive(false);
+            m_CameraTwo.SetActive(false);
+            m_MainCamera.SetActive(true);
             Debug.Log("Enabled");
             active = true;
         }
