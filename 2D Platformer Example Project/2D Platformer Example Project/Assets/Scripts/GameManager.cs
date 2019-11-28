@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     // Win sound
     if (winSound && audioSource)
       audioSource.PlayOneShot(winSound);
+        SceneManager.LoadScene(2);
   }
 
   public void ResetGame()
