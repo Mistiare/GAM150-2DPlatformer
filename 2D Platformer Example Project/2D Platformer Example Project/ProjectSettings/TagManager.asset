@@ -7,6 +7,7 @@ TagManager:
   - PlatformsDay
   - PlatformsNight
   - AltCamera
+  - Pickups
   layers:
   - Default
   - TransparentFX

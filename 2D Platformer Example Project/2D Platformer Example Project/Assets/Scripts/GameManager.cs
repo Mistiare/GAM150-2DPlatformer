@@ -7,18 +7,6 @@ public class GameManager : MonoBehaviour
   private static GameManager instance;
   public static GameManager Instance { get { return instance; } }
 
-  public int startingLives = 10;
-  public float timeToWin = 300f;
-
-  [HideInInspector]
-  public int livesRemaining;
-  [HideInInspector]
-  public float timeRemaining;
-
-  private bool countdownTime = true;
-
-  private GUIStyle guiStyle = new GUIStyle();
-
   [SerializeField]
   private AudioClip deathSound, winSound;
   private AudioSource audioSource;
@@ -35,10 +23,6 @@ public class GameManager : MonoBehaviour
     instance = this;
     DontDestroyOnLoad(gameObject);
 
-    // Set lives and timer.
-    livesRemaining = startingLives;
-    timeRemaining = timeToWin;
-
     if (deathSound || winSound)
       audioSource = gameObject.AddComponent<AudioSource>();
   }
@@ -50,56 +34,20 @@ public class GameManager : MonoBehaviour
     {
       ResetGame();
     }
+  }
 
-    // Do nothing if we're not counting down time.
-    if (!countdownTime)
-      return;
-
-    // Decrease time
-    timeRemaining -= Time.deltaTime;
-
-    if (timeRemaining < 0)
+    public void Death()
     {
-      // Reset Game
-      Debug.Log("Player has ran out of time!");
-      ResetGame();
-    }
-  }
 
-  private void OnGUI()
-  {
-    // Show lives and time left.
-    guiStyle.fontSize = 30;
-    GUILayout.Label(" Lives: " + livesRemaining, guiStyle);
-    GUILayout.Label(" Time Left: " + timeRemaining.ToString("0"), guiStyle);
-  }
-
-  public void Death()
-  {
-    // Remove a life.
-    livesRemaining--;
-
-    // Sound
-    if (deathSound && audioSource)
-      audioSource.PlayOneShot(deathSound);
-
-    if (livesRemaining < 0)
-    {
-      // Reset Game
-      Debug.Log("Player has lost all of their lives.");
-      ResetGame();
-      return;
-    }
-
-    // Reload the level.
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-  }
+        // Reset Game
+        Debug.Log("Player has lost all of their lives.");
+        ResetGame();
+        return;
+    } 
 
   public void NextLevel()
   {
     Debug.Log("Player has finished the level!");
-    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-
     // Win sound
     if (winSound && audioSource)
       audioSource.PlayOneShot(winSound);
@@ -110,10 +58,5 @@ public class GameManager : MonoBehaviour
     instance = null;
     SceneManager.LoadScene(0);
     Destroy(gameObject);
-  }
-
-  public void StopClock()
-  {
-    countdownTime = false;
   }
 }

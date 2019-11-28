@@ -7,6 +7,7 @@ public class Sign : MonoBehaviour {
     public GameObject SignDialog;
     public bool playerInRange;
 
+
     // Start is called before the first frame update
     void Start()
     {
